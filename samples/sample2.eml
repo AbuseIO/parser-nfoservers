@@ -1,0 +1,135 @@
+Return-Path: <ddos-response@nfoservers.com>
+X-Original-To: ikakavas@noc.grnet.gr
+Delivered-To: ikakavas@noc.grnet.gr
+Received: from localhost (ip6-localhost [127.0.0.1])
+	by mail.noc.grnet.gr (Postfix) with ESMTP id 6B886D9DC5
+	for <ikakavas@noc.grnet.gr>; Sat, 27 Aug 2016 21:25:30 +0300 (EEST)
+X-Virus-Scanned: Debian amavisd-new at mail.noc.grnet.gr
+Received: from mail.noc.grnet.gr ([127.0.0.1])
+	by localhost (mail.noc.grnet.gr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id H-315UJW8VWb for <ikakavas@noc.grnet.gr>;
+	Sat, 27 Aug 2016 21:25:27 +0300 (EEST)
+Received: from mx0.grnet.gr (mx0.grnet.gr [IPv6:2001:648:2ffc:200::161])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA256 (256/256 bits))
+	(No client certificate requested)
+	by mail.noc.grnet.gr (Postfix) with ESMTPS id 12FC3D9DBC
+	for <ikakavas@noc.grnet.gr>; Sat, 27 Aug 2016 21:25:26 +0300 (EEST)
+Received: from mail.nuclearfallout.net ([208.146.45.251])
+	by mx0.grnet.gr (envelope-from <ddos-response@nfoservers.com>)
+	with esmtps (tls_cipher TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+	(Exim 4.80 (Debian GNU/Linux))
+	id 1bdiIG-0001eS-7E
+	for abuse@grnet.gr; Sat, 27 Aug 2016 21:25:26 +0300
+Received: from www.nfoservers.com (www.nfoservers.com [208.146.44.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.nuclearfallout.net (Postfix) with ESMTPS id AC92C4C2C28C4
+	for <abuse@grnet.gr>; Sat, 27 Aug 2016 11:29:55 -0700 (PDT)
+Received: from www (localhost [127.0.0.1])
+	by www.nfoservers.com (Postfix) with SMTP id DAC99413B78
+	for <abuse@grnet.gr>; Sat, 27 Aug 2016 11:25:14 -0700 (PDT)
+To: abuse@grnet.gr
+Date: Sat, 27 Aug 2016 11:25:14 -0700
+Mime-Version: 1.0
+From: NFOservers.com DDoS notifier <ddos-response@nfoservers.com>
+Subject: Exploitable SSDP server used for an attack: 37.32.184.112
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Message-Id: <20160827182514.DAC99413B78@www.nfoservers.com>
+
+A public-facing device on your network, running on IP address 37.32.184.112=
+, operates an open SSDP service on port 1900 and participated in a large-sc=
+ale attack against a customer of ours, generating UDP responses to spoofed =
+M-SEARCH requests that claimed to be from the attack target. Devices often =
+send those responses to the victim from a different port, as yours did here.
+
+Please consider reconfiguring this SSDP-speaking server in one or more of t=
+hese ways:
+
+1. Updating the firmware/software on the device (if the update is recent, t=
+his is usually enough to resolve the situation).
+2. Adding a firewall rule to block outside access to this host on port 1900=
+.=20
+3. Disabling UPnP entirely (SSDP is a component of the overall UPnP subsyst=
+em and can't usually be disabled separately).
+4. Reconfiguring the device to not respond to outside M-SEARCH requests, or=
+ to rate-limit its responses (the process to follow for this would differ f=
+rom device to device and may not be possible for many devices).=20
+
+If you represent an ISP, please also consider a default-deny rule for outsi=
+de traffic destined for UDP port 1900 within your network, if you do not al=
+ready have one. Like chargen (UDP port 19), the SSDP port is rarely used le=
+gitimately by external hosts, and UPnP requires the use of broadcast traffi=
+c, so it doesn't apply outside of local subnets; as a result, we have not s=
+een reports that a filter of UDP 1900 has caused collateral damage. Many la=
+rge ISPs, including the US-based consumer ISP Comcast, already block UDP po=
+rt 1900 within their networks.
+
+Further reading:
+
+http://www.internetsociety.org/sites/default/files/01_5.pdf
+http://en.wikipedia.org/wiki/Simple_Service_Discovery_Protocol
+http://en.wikipedia.org/wiki/Universal_Plug_and_Play#Discovery
+
+Example SSDP responses from the host during this attack are given below.
+Date/timestamps (far left) are UTC.
+
+2016-08-27 18:00:34.643469 IP (tos 0x28, ttl 43, id 0, offset 0, flags [DF]=
+, proto UDP (17), length 353) 37.32.184.112.33119 > 162.248.91.x.19518: UDP=
+, length 325
+	0x0000:  4528 0161 0000 4000 2b11 71e2 2520 b870  E(.a..@.+.q.%..p
+	0x0010:  a2f8 5bf9 815f 4c3e 014d 09bd 4854 5450  ..[.._L>.M..HTTP
+	0x0020:  2f31 2e31 2032 3030 204f 4b0d 0a43 4143  /1.1.200.OK..CAC
+	0x0030:  4845 2d43 4f4e 5452 4f4c 3a20 6d61 782d  HE-CONTROL:.max-
+	0x0040:  6167 653d 3130 300d 0a44 4154 453a 2053  age=3D100..DATE:.S
+	0x0050:  6174                                     at
+2016-08-27 18:00:34.754159 IP (tos 0x28, ttl 43, id 0, offset 0, flags [DF]=
+, proto UDP (17), length 362) 37.32.184.112.33119 > 162.248.91.x.19518: UDP=
+, length 334
+	0x0000:  4528 016a 0000 4000 2b11 71d9 2520 b870  E(.j..@.+.q.%..p
+	0x0010:  a2f8 5bf9 815f 4c3e 0156 0e86 4854 5450  ..[.._L>.V..HTTP
+	0x0020:  2f31 2e31 2032 3030 204f 4b0d 0a43 4143  /1.1.200.OK..CAC
+	0x0030:  4845 2d43 4f4e 5452 4f4c 3a20 6d61 782d  HE-CONTROL:.max-
+	0x0040:  6167 653d 3130 300d 0a44 4154 453a 2053  age=3D100..DATE:.S
+	0x0050:  6174                                     at
+2016-08-27 18:00:34.862254 IP (tos 0x28, ttl 43, id 0, offset 0, flags [DF]=
+, proto UDP (17), length 362) 37.32.184.112.33119 > 162.248.91.x.19518: UDP=
+, length 334
+	0x0000:  4528 016a 0000 4000 2b11 71d9 2520 b870  E(.j..@.+.q.%..p
+	0x0010:  a2f8 5bf9 815f 4c3e 0156 0e86 4854 5450  ..[.._L>.V..HTTP
+	0x0020:  2f31 2e31 2032 3030 204f 4b0d 0a43 4143  /1.1.200.OK..CAC
+	0x0030:  4845 2d43 4f4e 5452 4f4c 3a20 6d61 782d  HE-CONTROL:.max-
+	0x0040:  6167 653d 3130 300d 0a44 4154 453a 2053  age=3D100..DATE:.S
+	0x0050:  6174                                     at
+2016-08-27 18:00:34.972755 IP (tos 0x28, ttl 43, id 0, offset 0, flags [DF]=
+, proto UDP (17), length 417) 37.32.184.112.33119 > 162.248.91.x.19518: UDP=
+, length 389
+	0x0000:  4528 01a1 0000 4000 2b11 71a2 2520 b870  E(....@.+.q.%..p
+	0x0010:  a2f8 5bf9 815f 4c3e 018d b4e8 4854 5450  ..[.._L>....HTTP
+	0x0020:  2f31 2e31 2032 3030 204f 4b0d 0a43 4143  /1.1.200.OK..CAC
+	0x0030:  4845 2d43 4f4e 5452 4f4c 3a20 6d61 782d  HE-CONTROL:.max-
+	0x0040:  6167 653d 3130 300d 0a44 4154 453a 2053  age=3D100..DATE:.S
+	0x0050:  6174                                     at
+2016-08-27 18:00:35.082177 IP (tos 0x28, ttl 43, id 0, offset 0, flags [DF]=
+, proto UDP (17), length 417) 37.32.184.112.33119 > 162.248.91.x.19518: UDP=
+, length 389
+	0x0000:  4528 01a1 0000 4000 2b11 71a2 2520 b870  E(....@.+.q.%..p
+	0x0010:  a2f8 5bf9 815f 4c3e 018d b4e8 4854 5450  ..[.._L>....HTTP
+	0x0020:  2f31 2e31 2032 3030 204f 4b0d 0a43 4143  /1.1.200.OK..CAC
+	0x0030:  4845 2d43 4f4e 5452 4f4c 3a20 6d61 782d  HE-CONTROL:.max-
+	0x0040:  6167 653d 3130 300d 0a44 4154 453a 2053  age=3D100..DATE:.S
+	0x0050:  6174                                     at
+
+
+(The final octet of our customer's IP address is masked in the above output=
+ because some automatic parsers become confused when multiple IP addresses =
+are included. The value of that octet is "249".)
+
+-John
+President
+NFOservers.com
+
+(We're sending out so many of these notices, and seeing so many auto-respon=
+ses, that we can't go through this email inbox effectively. If you have fol=
+low-up questions, please contact us at noc@nfoe.net.)=
+
